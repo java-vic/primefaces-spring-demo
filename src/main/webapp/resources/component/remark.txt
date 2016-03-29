@@ -1,0 +1,4 @@
+#此文件夹下放自已写的组件
+#写好的组件在别的页面中引用   http://java.sun.com/jsf/composite 这个空间名要加上
+#eg. xmlns:util=http://java.sun.com/jsf/composite/compenent/util
+#eg. <util:userLogin>
