@@ -1,0 +1,161 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<h:outputScript library="primefaces" name="primefaces.js" />
+	<h:outputScript library="bootstrap" name="js/bootstrap.min.js"></h:outputScript>
+	<h:outputStylesheet library="primefaces" name="primefaces.css"></h:outputStylesheet>
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet library="zTree" name="zTreeStyle.css"></h:outputStylesheet>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<ui:insert name="head"></ui:insert>
+</h:head>
+<h:body style="overflow: scroll; overflow-x: hidden">
+	<script type="text/javascript">
+		// 		function showMsg(timeout) {
+		// 			PF('msgDlg').show();
+		// 			if (typeof (timeout) === "undefined") {
+		// 				timeout = 1000;
+		// 			}
+		// 			setTimeout('closeMsg()', timeout);
+		// 		}
+
+		function closeMsg() {
+			PF('msgDlg').hide();
+		}
+
+		function showMsg(dialogName) {
+			PF('msgDlg').show();
+
+			var isError = $("#isError").val();
+			if (isError === 'false') {
+				PF(dialogName).hide();
+			}
+			if (typeof (timeout) === "undefined") {
+				timeout = 1000;
+			}
+			setTimeout('closeMsg()', timeout);
+		}
+
+		$(document).ready(function() {
+			setScreenWidthAndHeight();
+		})
+	</script>
+	<h:form id="remoteCommandForm">
+		<p:remoteCommand id="setscreen" name="setscreen"
+			actionListener="#{screen.onLoadListener()}"></p:remoteCommand>
+	</h:form>
+	<div style="width: 100%;height: 100%;">
+		<div id="header"
+			style="width: 100%;height: 80px;border: 1px solid #EEE;">
+			<ui:insert name="header">
+				<ui:include src="/template/header.xhtml"></ui:include>
+			</ui:insert>
+		</div>
+		<div id="center" style="width: 100%;height: 550px;margin-top: 4px;">
+			<div id="left"
+				style="width:15%;height: 550px;border: 2px solid #DDD8E4;float: left;overflow: auto;">
+				<ui:insert name="menu">
+					<ui:include src="/template/menuNew.xhtml"></ui:include>
+				</ui:insert>
+			</div>
+			<div id="content"
+				style="border: 1px solid #EEE;width:84%;height: 550px;float: right; margin-left">
+				<!-- 				<h:form id="tabForm"> -->
+				<!-- 					<p:tabView binding="#{tabController.tabLists}" var="tab" -->
+				<!-- 						id="mainTab" dynamic="true" cache="false"> -->
+				<!-- 						<p:ajax event="tabClose" listener="#{tabController.closeTab(tab)}" -->
+				<!-- 							update="@form" /> -->
+				<!-- 						<p:tab titie="主页" closable="false"> -->
+				<!-- 						  这是我的主页面tab，不能关闭 -->
+				<!-- 						</p:tab> -->
+				<!-- 						<p:tab title="#{tab.tabName}" closable="true" id="{tab.tabId}"> -->
+				<!-- 							<ui:include src="#{tab.tabUrl}"></ui:include> -->
+				<!-- 						</p:tab> -->
+				<!-- 					</p:tabView> -->
+				<!-- 				</h:form> -->
+				<ui:insert name="crm_body">
+				</ui:insert>
+			</div>
+		</div>
+		<div id="footer"
+			style="width:100%;height: 50px;border: 1px solid #EEE; margin-top: 4px;">
+			<ui:insert name="footer">
+				<ui:include src="/template/footer.xhtml"></ui:include>
+			</ui:insert>
+		</div>
+	</div>
+	<!-- 	<p:layout> -->
+	<!-- 		<p:layoutUnit position="north"> -->
+	<!-- 			<div style="border: 1px solid #CCCCCC;"> -->
+	<!-- 				<ui:insert name="header"> -->
+	<!-- 					<ui:include src="/template/header.xhtml"></ui:include> -->
+	<!-- 				</ui:insert> -->
+	<!-- 			</div> -->
+	<!-- 		</p:layoutUnit> -->
+	<!-- 		<p:layoutUnit position="west"> -->
+	<!-- 			<ui:insert name="menu"> -->
+	<!-- 				<ui:include src="/template/menu.xhtml"></ui:include> -->
+	<!-- 			</ui:insert> -->
+	<!-- 		</p:layoutUnit> -->
+	<!-- 		<p:layoutUnit position="center" size="500"> -->
+	<!-- 			<div -->
+	<!-- 				style="border: 1px solid #CCCCCC;height: 500px;width:100% ;overflow:auto;"> -->
+	<!-- 				<ui:insert name="crm_body"></ui:insert> -->
+	<!-- 			</div> -->
+	<!-- 		</p:layoutUnit> -->
+	<!-- 		<p:layoutUnit position="south"> -->
+	<!-- 			<div style="border: 1px solid #CCCCCC;"> -->
+	<!-- 				<ui:insert name="footer"> -->
+	<!-- 					<ui:include src="/template/footer.xhtml"></ui:include> -->
+	<!-- 				</ui:insert> -->
+	<!-- 			</div> -->
+	<!-- 		</p:layoutUnit> -->
+	<!-- 	</p:layout> -->
+
+
+	<!-- 	<p:layout fullPage="true"> -->
+	<!-- 		<p:layoutUnit position="north"> -->
+	<!-- 			<ui:insert name="header"> -->
+	<!-- 				<ui:include src="/template/header.xhtml"></ui:include> -->
+	<!-- 			</ui:insert> -->
+	<!-- 		</p:layoutUnit> -->
+	<!-- 		<p:layoutUnit position="center"> -->
+	<!-- 			<ui:insert name="crm_body"></ui:insert> -->
+	<!-- 		</p:layoutUnit> -->
+	<!-- 		<p:layoutUnit position="south"> -->
+	<!-- 			<ui:insert name="footer"> -->
+	<!-- 				<ui:include src="/template/footer.xhtml"></ui:include> -->
+	<!-- 			</ui:insert> -->
+	<!-- 		</p:layoutUnit> -->
+	<!-- 	</p:layout> -->
+	<p:dialog widgetVar="msgDlg" id="msgBox" resizable="false">
+		<div
+			style="width:400px;height:70px;text-align: center;vertical-align: middle;">
+			<h:inputHidden id="isError" value="#{messageBox.errorMessage}"></h:inputHidden>
+			<c:if test="#{messageBox.type eq 'info'}">
+				<div class="ui-messages-info ui-corner-all">
+					<span class="ui-messages-info-icon"></span>
+					<h:outputText value="#{messageBox.message}" />
+				</div>
+			</c:if>
+			<c:if test="#{messageBox.type eq 'warn'}">
+				<div class="ui-messages-warn ui-corner-all">
+					<span class="ui-messages-warn-icon"></span>
+					<h:outputText value="#{messageBox.message}" />
+				</div>
+			</c:if>
+			<c:if test="#{messageBox.type eq 'error'}">
+				<div class="ui-messages-error ui-corner-all">
+					<span class="ui-messages-error-icon"></span>
+					<h:outputText value="#{messageBox.message}" />
+				</div>
+			</c:if>
+		</div>
+	</p:dialog>
+</h:body>
+</html>

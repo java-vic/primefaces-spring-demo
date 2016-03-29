@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<body>
+	<ui:composition>
+		<script type="text/javascript" src="../js/currentDate.js"></script>
+		<h:outputScript>
+			$(document).ready(function() {
+				getToDay();
+			})
+		</h:outputScript>
+		<!-- 		<c:set var="inputSize" value="39" /> -->
+		<div>
+
+			<div
+				style="float: left;text-align: left;margin-top: 10px; margin-left: 10px; width: 15%;">
+				欢迎你,Vic
+				<output id="date"></output>
+			</div>
+			<div
+				style="float: left;width:70%;margin-left:5px; border: 1px solid #CCCCCC;">
+				<div style="padding-left:40px; padding-top:5px;">
+					<p:commandButton value="语音登录"></p:commandButton>
+					<p:commandButton value="安全退出"></p:commandButton>
+					<!-- 					<p:themeSwitcher style="width:150px;"> -->
+					<!-- 						<f:selectItem itemValue="" itemLabel="选择主题"></f:selectItem> -->
+					<!-- 						<f:selectItems var="theme" value="#{themeBeanController.themeBeanLists}" itemValue="#{theme.themeName}" itemLabel="#{theme.themeName}"></f:selectItems> -->
+					<!-- 					</p:themeSwitcher> -->
+					<p:selectOneMenu value="#{themeBeanController.themeName}" style="width:200">
+						<f:selectItem itemValue="" itemLabel="选择主题"></f:selectItem>
+						<f:selectItems var="theme"
+							value="#{themeBeanController.themeBeanLists}"
+							itemValue="#{theme.themeName}" itemLabel="#{theme.themeName}"></f:selectItems>
+					</p:selectOneMenu>
+				</div>
+			</div>
+			<div style="float: left;height: 70px; margin-left: 10px; ">
+				<div
+					style="text-align: right;margin: 0px; padding-top:5px; padding-right: 5px;">
+					<div style="float: left;width: 80px;">
+						<p:commandLink value="登陆语音"></p:commandLink>
+					</div>
+					<div style="float: left;width: 80px;">
+						<p:commandLink value="安全退出"></p:commandLink>
+
+					</div>
+				</div>
+				<div style="text-align: right;padding-top: 20px;">
+					<h:panelGrid columns="2" style="">
+						<h:outputText value="当前状态："></h:outputText>
+						<p:selectOneMenu id="onLine">
+							<f:selectItem itemValue="0" itemLabel="在线"
+								class="btn btn-success"></f:selectItem>
+							<f:selectItem itemValue="1" itemLabel="工作中"
+								class="btn btn-danger"></f:selectItem>
+							<f:selectItem itemValue="2" itemLabel="离开"
+								class="btn btn--warning"></f:selectItem>
+						</p:selectOneMenu>
+					</h:panelGrid>
+				</div>
+			</div>
+		</div>
+	</ui:composition>
+</body>
+</html>
