@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="head">
+		<style type="text/css">
+.ui-panelgrid-cell {
+	border-color: inherit;
+	border-style: none;
+	padding: 4px 10px;
+}
+</style>
+	</ui:define>
+	<ui:define name="crm_body">
+		<c:set var="inputSize" value="39"></c:set>
+		<!-- 	 <script type="text/javascript"> -->
+		<!-- 	  function openDialog() { -->
+		<!-- 		  PF('sysuserDlg').show(); -->
+		<!-- 	} -->
+		<!-- 	 </script> -->
+		<h:form id="toolBarForm">
+			<p:toolbar id="toolBar">
+				<p:toolbarGroup align="right">
+					<p:commandButton value="添加"
+						actionListener="#{sysUserController.doAddBefore()}"
+						oncomplete="PF('sysUserDlg').show();" update=":sysUserDialogForm"></p:commandButton>
+					<p:commandButton value="修改" actionListener="#{sysUserController.doUpdateBefore()}" oncomplete="PF('sysUserDlg').show();"
+						update=":sysUserDialogForm"></p:commandButton>
+					<p:commandButton value="删除" update=":sysUserForm:dataTable,:msgBox"
+						actionListener="#{sysUserController.delSysUser()}"
+						oncomplete="showMsg();"></p:commandButton>
+					<p:selectOneMenu>
+						<f:selectItem itemLabel="请选择" itemValue=""></f:selectItem>
+						<f:selectItem itemLabel="1" itemValue="1"></f:selectItem>
+						<f:selectItem itemLabel="2" itemValue="2"></f:selectItem>
+					</p:selectOneMenu>
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panel id="toggleable" header="Toggleable" toggleable="true">
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="用户名："></h:outputText>
+					<h:inputText></h:inputText>
+
+					<h:commandButton value="查询"></h:commandButton>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+		<h:form id="sysUserForm">
+		
+		  屏幕高度 <p:inputText value="#{screen.height}"></p:inputText>
+    屏幕宽度 <p:inputText value="#{screen.width}"></p:inputText>
+			<p:dataTable id="dataTable" var="user"
+				value="#{sysUserController.sysUserLists}" scrollable="true"
+				scrollHeight="200" rowKey="#{user.uuid}" rowIndexVar="indexVar"
+				selectionMode="single"
+				paginatorPosition="bottom"
+				selection="#{sysUserController.selectedSysUser}"
+				emptyMessage="没有记录..." paginator="true" liveScroll="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" rows="5">
+				<!-- 				<p:ajax event="rowSelect" -->
+				<!-- 					listener="#{sysUserController.setCurrentSelectSysUser()}" -->
+				<!-- 					update=":toolBarForm:toolBar" /> -->
+				<!-- 				<p:ajax event="rowUnselect" -->
+				<!-- 					listener="#{sysUserController.setCurrentSelectSysUser()}" -->
+				<!-- 					update=":toolBarForm:toolBar" /> -->
+				<!-- 				<p:ajax event="toggleSelect" update="@this" process="@this" /> -->
+<!-- 				<p:ajax event="toggleSelect" update="@this" process="@this" /> -->
+				<p:ajax event="rowSelect"  />
+				<p:ajax event="rowUnselect" />
+<!-- 				<p:column selectionMode="multiple" -->
+<!-- 					style="width:50px;text-align:center"> -->
+<!-- 				</p:column> -->
+				<p:column headerText="用户名" sortBy="#{user.name}">
+					<h:outputText value="#{user.name}"></h:outputText>
+				</p:column>
+				<p:column headerText="性别" sortBy="#{user.gender}">
+					<h:outputText value="男" rendered="#{user.gender==1}"></h:outputText>
+					<h:outputText value="女" rendered="#{user.gender==0}"></h:outputText>
+					<h:outputText value="" rendered="#{user.gender==null}"></h:outputText>
+				</p:column>
+				<p:column headerText="年龄" sortBy="#{user.age}">
+					<h:outputText value="#{user.age}"></h:outputText>
+				</p:column>
+				<p:column headerText="联系电话">
+					<h:outputText value="#{user.phone}"></h:outputText>
+				</p:column>
+				<p:column headerText="用户状态" sortBy="#{user.userStatus}">
+					<h:outputText value="#{user.userStatus}"></h:outputText>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog header="添加/编辑用户" widgetVar="sysUserDlg" id="sysUserDialog"
+			modal="true" height="150">
+			<h:form id="sysUserDialogForm">
+				<p:panelGrid columns="4">
+					<p:outputLabel value="用户名：" style="text-align:right;"></p:outputLabel>
+					<p:inputText value="#{sysUserController.sysUser.name}"></p:inputText>
+					<p:outputLabel for="gender" value="性别：" style="text-align:right;"></p:outputLabel>
+					<p:selectOneMenu id="gender"
+						value="#{sysUserController.sysUser.gender}" style="width:150px;">
+						<f:selectItem itemLabel="男" itemValue="1"></f:selectItem>
+						<f:selectItem itemLabel="女" itemValue="0"></f:selectItem>
+					</p:selectOneMenu>
+
+
+					<!-- 					<p:outputLabel value="年龄："></p:outputLabel> -->
+					<!-- 					<p:inputText value="#{sysUserController.sysUser.age}"></p:inputText> -->
+					<p:outputLabel value="联系电话：" style="text-align:right;"></p:outputLabel>
+					<p:inputText value="#{sysUserController.sysUser.phone}"></p:inputText>
+				</p:panelGrid>
+				<div style="text-align: center; vertical-align: middle;">
+					<div style="padding-top: 10px;">
+						<p:commandButton value="保存"
+							actionListener="#{sysUserController.saveSysUser()}"
+							update=":msgBox,:sysUserForm:dataTable"
+							oncomplete="showMsg();if(#{sysUserController.error}) PF('sysUserDlg').hide();"></p:commandButton>
+						<p:commandButton value="取消" oncomplete="PF('sysUserDlg').hide()"></p:commandButton>
+
+						<p:commandButton value="有错误消息"
+							actionListener="#{sysUserController.setErrorInfoMessage()}"
+							update=":msgBox" oncomplete="showMsg('sysUserDlg')"></p:commandButton>
+						<p:commandButton value="没错误消息"
+							actionListener="#{sysUserController.setInfoMessage()}"
+							update=":msgBox" oncomplete="showMsg('sysUserDlg')"></p:commandButton>
+					</div>
+				</div>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

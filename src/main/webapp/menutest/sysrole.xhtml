@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="crm_body">
+	
+	 <p:treeTable value="#{sysRoleController.sysRoleNode}" var="sysRoleNode" scrollable="true" scrollHeight="500" selection="#{sysRoleController.selectedNode}" selectionMode="single">
+	   <p:column headerText="Id">
+	     <h:outputText value="#{sysRoleNode.id}"></h:outputText>
+	   </p:column>
+	   <p:column headerText="Name">
+	   <h:outputText value="#{sysRoleNode.name}"></h:outputText>
+	   </p:column>
+	 </p:treeTable>
+   </ui:define>
+</ui:composition>
+</html>
